@@ -162,7 +162,7 @@ This file automates the Windows installation.
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4103721-x64 /quiet</CommandLine>
+                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4103721-x64.msu /quiet</CommandLine>
                     <Description>Install Windows Update</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
