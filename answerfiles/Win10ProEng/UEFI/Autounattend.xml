@@ -162,13 +162,19 @@ This file automates the Windows installation.
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4103721-x64.msu /quiet</CommandLine>
-                    <Description>Install Windows Update</Description>
+                    <CommandLine>powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"</CommandLine>
+                    <Description>Install Choco</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <Order>2</Order>
-                    <CommandLine>@"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"</CommandLine>
+                    <CommandLine>SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"</CommandLine>
                     <Description>Install Choco</Description>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>3</Order>
+                    <CommandLine>wusa.exe "e:\Updates\windows10.0-kb4103721-x64.msu" /quiet</CommandLine>
+                    <Description>Install Windows Update</Description>
+                    <RequiresUserInput>false</RequiresUserInput>
                 </SynchronousCommand>
             </FirstLogonCommands>	
         </component>
