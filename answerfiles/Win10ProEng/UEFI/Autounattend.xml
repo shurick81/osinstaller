@@ -1,30 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
-
-<!-- Autounattend_x64-UEFI_sample.xml
-
-This file automates the Windows installation.
-
-     Before using this file:
-      * Replace ProductKey with a product key for the edition of Windows you are installing
-        (example: Windows 8 Pro)
-        Note:
-           The product key used in Microsoft-Windows-Setup\UserData\ProductKey\Key
-           can be used many times in different installations and is not used to activate Windows.
-           It is only used to choose which edition of Windows to install.
-
-           The individual product key is either specified by the user, or by setting
-           Microsoft-Windows-Shell-Setup\ProductKey.
-     * Set the default language to your own:
-       Replace "en-US" with your language code in Microsoft-Windows-International-Core-WinPE\SetupUILanguage.
-       For a list of languages, see http://go.microsoft.com/fwlink/?LinkId=206620.
-     * OEMs: Replace OEMInformation with your support information
-
-     To use this file:
-        Save this file on the root of a USB flash drive with the filename: Autounattend.xml
-        Put the Windows DVD and the USB key into a new x64-UEFI PC.
--->
-
     <settings pass="windowsPE">
         <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <SetupUILanguage>
@@ -162,16 +137,11 @@ This file automates the Windows installation.
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"</CommandLine>
-                    <Description>Install Choco</Description>
+                    <CommandLine>powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Enable-NetFirewallRule -DisplayGroup \"Remote Desktop\"; Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name 'fDenyTSConnections' -Value 0; (Get-WmiObject -class Win32_TSGeneralSetting -Namespace root\cimv2\terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(0) | Out-Null;"</CommandLine>
+                    <Description>Enable RDP</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <Order>2</Order>
-                    <CommandLine>SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"</CommandLine>
-                    <Description>Install Choco</Description>
-                </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <Order>3</Order>
                     <CommandLine>wusa.exe "e:\Updates\windows10.0-kb4103721-x64.msu" /quiet</CommandLine>
                     <Description>Install Windows Update</Description>
                     <RequiresUserInput>false</RequiresUserInput>
@@ -180,18 +150,28 @@ This file automates the Windows installation.
         </component>
     </settings>
     <settings pass="specialize">
+        <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+            <fDenyTSConnections>false</fDenyTSConnections>
+        </component>
+        <component name="Microsoft-Windows-TerminalServices-RDP-WinStationExtensions" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS"> 
+            <UserAuthentication>0</UserAuthentication>
+        </component>
+        <component name="Networking-MPSSVC-Svc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FirewallGroups>
+                <FirewallGroup wcm:action="add" wcm:keyValue="RemoteDesktop">
+                    <Active>true</Active>
+                    <Group>@FirewallAPI.dll,-28752</Group>
+                    <Profile>all</Profile>
+                </FirewallGroup>
+            </FirewallGroups>
+        </component>
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <OEMInformation>
-                <Manufacturer>Sapozhkov</Manufacturer>
-                <SupportURL>https://www.sapozhkov.net/</SupportURL>
                 <HelpCustomized>false</HelpCustomized>
             </OEMInformation>
-        </component>
-        <component name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <SkipAutoActivation>true</SkipAutoActivation>
-        </component>
-        <component name="Security-Malware-Windows-Defender" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <DisableAntiSpyware>false</DisableAntiSpyware>
+            <ComputerName>win-10</ComputerName>
+            <TimeZone>Coordinated Universal Time</TimeZone>
+            <RegisteredOwner />
         </component>
     </settings>
 </unattend>

@@ -7,6 +7,7 @@
 ```
 select disk 2
 clean
+RESCAN
 create partition primary
 format quick fs=FAT32 label="WinInstall"
 active
@@ -28,7 +29,7 @@ $localFilePath = ( Get-Location ).Path + "\" + $localFileName;
 Write-Host "Checking local image file";
 if ( !( Get-Item .\$localFileName -ErrorAction Ignore ) )
 {
-    Invoke-RestMethod -Uri $osDictionary.URL -OutFile .\$localFileName;
+    Start-BitsTransfer -Source $osDictionary.URL -Destination .\$localFileName;
 }
 
 $updateLocalFileName = $osDictionary.UpdateLocalFileName;
@@ -61,3 +62,5 @@ Copy-Item -Path ".\$updateLocalFileName" -Destination "$targetDriveLetter`:\Upda
 
 Copy-Item -Path ".\answerfiles\$osCode\$bootType\Autounattend.xml" -Destination "$targetDriveLetter`:" -Force
 ```
+
+3. Boot via UEFI or BIOS according to the parameter $bootType above
