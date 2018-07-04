@@ -137,13 +137,24 @@
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>powershell.exe -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "Enable-NetFirewallRule -DisplayGroup \"Remote Desktop\"; Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name 'fDenyTSConnections' -Value 0; (Get-WmiObject -class Win32_TSGeneralSetting -Namespace root\cimv2\terminalservices -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(0) | Out-Null;"</CommandLine>
-                    <Description>Enable RDP</Description>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Sleeping 300' -force; Sleep 300; Add-Content C:\osinstalllog.txt 'Finished sleeping' -force"</CommandLine>
+                    <Description>Debugging command</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <Order>2</Order>
-                    <CommandLine>wusa.exe "e:\Updates\windows10.0-kb4103721-x64.msu" /quiet</CommandLine>
+                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4103721-x64.msu /quiet</CommandLine>
                     <Description>Install Windows Update</Description>
+                    <RequiresUserInput>false</RequiresUserInput>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>3</Order>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Command has run' -force"</CommandLine>
+                    <Description>Debugging command</Description>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>4</Order>
+                    <CommandLine>powercfg.exe -change -standby-timeout-ac 0</CommandLine>
+                    <Description>Configure Windows not to sleep</Description>
                     <RequiresUserInput>false</RequiresUserInput>
                 </SynchronousCommand>
             </FirstLogonCommands>	
@@ -169,7 +180,7 @@
             <OEMInformation>
                 <HelpCustomized>false</HelpCustomized>
             </OEMInformation>
-            <ComputerName>win-10</ComputerName>
+            <ComputerName>Win10ProEng</ComputerName>
             <TimeZone>Coordinated Universal Time</TimeZone>
             <RegisteredOwner />
         </component>

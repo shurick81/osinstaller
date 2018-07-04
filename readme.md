@@ -2,7 +2,7 @@
 
 ## Windows
 
-1. Run diskpart with administrative priviledges and paste:
+1. Run diskpart with administrative priviledges and paste for UEFI:
 
 ```
 select disk 2
@@ -10,6 +10,18 @@ clean
 RESCAN
 create partition primary
 format quick fs=FAT32 label="WinInstall"
+active
+assign letter=E
+Exit
+```
+
+For BIOS:
+```
+select disk 2
+clean
+RESCAN
+create partition primary
+format quick fs=NTFS label="WinInstall"
 active
 assign letter=E
 Exit
