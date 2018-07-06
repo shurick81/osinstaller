@@ -31,7 +31,7 @@ Exit
 
 ```PowerShell
 $targetDriveLetter = "E";
-$osCode = "Win10ProEng";
+$osCode = "Win_10_1607_Pro_Eng";
 $bootType = "UEFI";
 $dictonary = Import-PowershellDataFile .\dictionary.psd1;
 $osDictionary = $dictonary.$osCode;
