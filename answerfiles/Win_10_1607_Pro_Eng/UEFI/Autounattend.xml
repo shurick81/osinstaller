@@ -137,27 +137,48 @@
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Sleeping 300' -force; Sleep 300; Add-Content C:\osinstalllog.txt 'Finished sleeping' -force"</CommandLine>
-                    <Description>Debugging command</Description>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Sleeping 60' -force; Sleep 60; Add-Content C:\osinstalllog.txt 'Finished sleeping' -force"</CommandLine>
+                    <Description>Pausing</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <Order>2</Order>
+                    <CommandLine>powercfg.exe -change -standby-timeout-ac 0</CommandLine>
+                    <Description>Configure Windows not to sleep</Description>
+                    <RequiresUserInput>false</RequiresUserInput>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>3</Order>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Finished: Configure Windows not to sleep' -force"</CommandLine>
+                    <Description>Debugging command</Description>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>4</Order>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Sleeping 5' -force; Sleep 5; Add-Content C:\osinstalllog.txt 'Finished sleeping' -force"</CommandLine>
+                    <Description>Pausing</Description>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>5</Order>
+                    <CommandLine>powercfg.exe -change -hibernate-timeout-ac 0</CommandLine>
+                    <Description>Configure Windows not to hibernate</Description>
+                    <RequiresUserInput>false</RequiresUserInput>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>6</Order>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Finished: Configure Windows not to hibernate' -force"</CommandLine>
+                    <Description>Debugging command</Description>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>7</Order>
                     <CommandLine>wusa.exe e:\Updates\windows10.0-kb4103723-x64.msu /quiet</CommandLine>
                     <Description>Install Windows Update</Description>
                     <RequiresUserInput>false</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
-                    <Order>3</Order>
-                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Command has run' -force"</CommandLine>
+                    <Order>8</Order>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Commands have run' -force"</CommandLine>
                     <Description>Debugging command</Description>
                 </SynchronousCommand>
-                <SynchronousCommand wcm:action="add">
-                    <Order>4</Order>
-                    <CommandLine>powercfg.exe -change -standby-timeout-ac 0</CommandLine>
-                    <Description>Configure Windows not to sleep</Description>
-                    <RequiresUserInput>false</RequiresUserInput>
-                </SynchronousCommand>
-            </FirstLogonCommands>	
+            </FirstLogonCommands>
         </component>
     </settings>
     <settings pass="specialize">

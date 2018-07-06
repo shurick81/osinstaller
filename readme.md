@@ -2,10 +2,11 @@
 
 ## Windows
 
-1. Run diskpart with administrative priviledges and paste for UEFI:
+1. Run in cmd with administrative priviledges and paste for UEFI:
 
 ```
-select disk 2
+diskpart
+select disk 1
 clean
 RESCAN
 create partition primary
@@ -17,6 +18,7 @@ Exit
 
 For BIOS:
 ```
+diskpart
 select disk 2
 clean
 RESCAN
@@ -31,7 +33,7 @@ Exit
 
 ```PowerShell
 $targetDriveLetter = "E";
-$osCode = "Win_10_1607_Pro_Eng";
+$osCode = "Win_10_1709_Pro_Eng";
 $bootType = "UEFI";
 $dictonary = Import-PowershellDataFile .\dictionary.psd1;
 $osDictionary = $dictonary.$osCode;
