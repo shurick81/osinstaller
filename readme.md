@@ -6,7 +6,7 @@
 
 ```
 diskpart
-select disk 1
+select disk 2
 clean
 RESCAN
 create partition primary
@@ -33,7 +33,7 @@ Exit
 
 ```PowerShell
 $targetDriveLetter = "E";
-$osCode = "Win_10_1709_Pro_Eng";
+$osCode = "Win_10_1803_Pro_Eng";
 $bootType = "UEFI";
 $dictonary = Import-PowershellDataFile .\dictionary.psd1;
 $osDictionary = $dictonary.$osCode;

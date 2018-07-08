@@ -95,7 +95,7 @@
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
                     <Order>1</Order>
-                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Sleeping 60' -force; Sleep 60; Add-Content C:\osinstalllog.txt 'Finished sleeping' -force"</CommandLine>
+                    <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Sleeping 180' -force; Sleep 180; Add-Content C:\osinstalllog.txt 'Finished sleeping' -force"</CommandLine>
                     <Description>Pausing</Description>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
