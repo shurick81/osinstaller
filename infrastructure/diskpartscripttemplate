@@ -1,0 +1,8 @@
+select disk {0}
+clean
+RESCAN
+create partition primary
+format quick fs=FAT32 label="WinInstall"
+active
+assign
+Exit

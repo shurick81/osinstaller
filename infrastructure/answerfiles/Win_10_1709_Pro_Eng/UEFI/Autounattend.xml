@@ -169,7 +169,7 @@
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <Order>7</Order>
-                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4103727-x64.msu /quiet</CommandLine>
+                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4338825-x64.msu /quiet</CommandLine>
                     <Description>Install Windows Update</Description>
                     <RequiresUserInput>false</RequiresUserInput>
                 </SynchronousCommand>
