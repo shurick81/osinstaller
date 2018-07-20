@@ -26,10 +26,10 @@ if ( $lettersToChoose.Count -gt 0 )
         $localFileName = $osDictionary.LocalFileName;
         $localFilePath = ( Get-Location ).Path + "\" + $localFileName;
 
-        Write-Host "Checking local image file";
-        if ( !( Get-Item .\$localFileName -ErrorAction Ignore ) )
+        Write-Host "Checking local image file $localFilePath";
+        if ( !( Get-Item $localFilePath -ErrorAction Ignore ) )
         {
-            Start-BitsTransfer -Source $osDictionary.URL -Destination .\$localFileName;
+            Start-BitsTransfer -Source $osDictionary.URL -Destination $localFilePath;
         }
 
         $updateLocalFileName = $osDictionary.UpdateLocalFileName;
@@ -47,9 +47,10 @@ if ( $lettersToChoose.Count -gt 0 )
             Set-Content -Path $filePath;
         Write-Host "Running diskpart /s $filePath";
         diskpart /s $filePath;
-        Sleep 10;
+        Sleep 30;
         $partition = Get-Partition -DiskNumber $targetDiskNumber;
         $targetDriveLetter = $partition.DriveLetter;
+        Write-Host "targetDriveLetter: $targetDriveLetter"
 
         Write-Host "Mounting image file $localFilePath";
         $mountResult = Mount-DiskImage $localFilePath -PassThru;

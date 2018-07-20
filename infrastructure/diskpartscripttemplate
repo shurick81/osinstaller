@@ -5,4 +5,3 @@ create partition primary
 format quick fs=FAT32 label="WinInstall"
 active
 assign
-Exit

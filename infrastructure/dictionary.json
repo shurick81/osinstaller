@@ -22,5 +22,11 @@
         "LocalFileName": "Win10_1607_English_x64.iso",
         "UpdateURL": "http://download.windowsupdate.com/d/msdownload/update/software/secu/2018/06/windows10.0-kb4338814-x64_f4a1df3470cc06192c5157c3f574ffdc4edadabd.msu",
         "UpdateLocalFileName": "windows10.0-kb4338814-x64.msu"
+    },
+    "Win_2016_1607_Datacenter_Eng": {
+        "URL": "https://download.microsoft.com/download/1/6/F/16FA20E6-4662-482A-920B-1A45CF5AAE3C/14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO",
+        "LocalFileName": "Win_2016_1607_Datacenter_Eng.iso",
+        "UpdateURL": "http://download.windowsupdate.com/d/msdownload/update/software/secu/2018/06/windows10.0-kb4338814-x64_f4a1df3470cc06192c5157c3f574ffdc4edadabd.msu",
+        "UpdateLocalFileName": "windows10.0-kb4338814-x64.msu"
     }
 }
