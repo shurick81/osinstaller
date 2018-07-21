@@ -26,14 +26,14 @@ if ( $lettersToChoose.Count -gt 0 )
         $localFileName = $osDictionary.LocalFileName;
         $localFilePath = ( Get-Location ).Path + "\" + $localFileName;
 
-        Write-Host "Checking local image file $localFilePath";
-        if ( !( Get-Item $localFilePath -ErrorAction Ignore ) )
+        Write-Host "Checking local image file $localFileName";
+        if ( !( Get-Item .\$localFileName -ErrorAction Ignore ) )
         {
-            Start-BitsTransfer -Source $osDictionary.URL -Destination $localFilePath;
+            Start-BitsTransfer -Source $osDictionary.URL -Destination .\$localFileName;
         }
 
         $updateLocalFileName = $osDictionary.UpdateLocalFileName;
-        Write-Host "Checking local update file";
+        Write-Host "Checking local update file $updateLocalFileName";
         if ( !( Get-Item .\$updateLocalFileName -ErrorAction Ignore ) )
         {
             Invoke-RestMethod -Uri $osDictionary.UpdateURL -OutFile .\$updateLocalFileName;
@@ -43,7 +43,13 @@ if ( $lettersToChoose.Count -gt 0 )
         $filePath = "$env:Temp\$fileName";
         
         $diskpartScriptTemplateContent = Get-Content .\diskpartscripttemplate -Raw;
-        [string]::Format( $diskpartScriptTemplateContent, $targetDiskNumber ) | `
+        if ( $config.bootType -eq "BIOS" )
+        {
+            $fileSystem = "NTFS"
+        } else {
+            $fileSystem = "FAT32"
+        }
+        [string]::Format( $diskpartScriptTemplateContent, $targetDiskNumber, $fileSystem ) | `
             Set-Content -Path $filePath;
         Write-Host "Running diskpart /s $filePath";
         diskpart /s $filePath;
