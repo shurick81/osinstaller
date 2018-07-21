@@ -127,12 +127,18 @@
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <Order>7</Order>
-                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4338814-x64.msu /quiet</CommandLine>
+                    <CommandLine>wusa.exe d:\Updates\windows10.0-kb4338814-x64.msu /quiet</CommandLine>
                     <Description>Install Windows Update</Description>
                     <RequiresUserInput>false</RequiresUserInput>
                 </SynchronousCommand>
                 <SynchronousCommand wcm:action="add">
                     <Order>8</Order>
+                    <CommandLine>wusa.exe e:\Updates\windows10.0-kb4338814-x64.msu /quiet</CommandLine>
+                    <Description>Install Windows Update</Description>
+                    <RequiresUserInput>false</RequiresUserInput>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>9</Order>
                     <CommandLine>powershell.exe -noprofile -executionpolicy bypass -command "Add-Content C:\osinstalllog.txt 'Commands have run' -force"</CommandLine>
                     <Description>Debugging command</Description>
                 </SynchronousCommand>
