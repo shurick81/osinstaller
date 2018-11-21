@@ -33,12 +33,14 @@ if ( $lettersToChoose.Count -gt 0 )
         }
 
         $updateLocalFileName = $osDictionary.UpdateLocalFileName;
-        Write-Host "Checking local update file $updateLocalFileName";
-        if ( !( Get-Item .\$updateLocalFileName -ErrorAction Ignore ) )
+        if ( $updateLocalFileName )
         {
-            Invoke-RestMethod -Uri $osDictionary.UpdateURL -OutFile .\$updateLocalFileName;
+            Write-Host "Checking local update file $updateLocalFileName";
+            if ( !( Get-Item .\$updateLocalFileName -ErrorAction Ignore ) )
+            {
+                Invoke-RestMethod -Uri $osDictionary.UpdateURL -OutFile .\$updateLocalFileName;
+            }
         }
-
         $fileName = [guid]::NewGuid().Guid;
         $filePath = "$env:Temp\$fileName";
         
@@ -71,13 +73,21 @@ if ( $lettersToChoose.Count -gt 0 )
 
         Write-Host "Copying installation files from $driveLetter`: to $targetDriveLetter`:";
         Get-Item "$driveLetter`:\*" | ? { $_.Name -ne "autorun.inf" } | Copy-Item -Destination "$targetDriveLetter`:" -Recurse -Container -Force
-
+        if ( $config.bootType -eq "UEFI" )
+        {
+            Start-Process -FilePath "Dism" -ArgumentList "/Split-Image /ImageFile:$driveLetter`:\sources\install.wim /SWMFile:$targetDriveLetter`:\sources\install.swm /FileSize:4096" -Wait -NoNewWindow;
+        }
+        
         Write-Host "Dismounting image file";
         Dismount-DiskImage -ImagePath $localFilePath;
 
-        Write-Host "Copying Update file";
-        New-Item -Path "$targetDriveLetter`:\Updates" -ItemType Directory -Force | Out-Null
-        Copy-Item -Path ".\$updateLocalFileName" -Destination "$targetDriveLetter`:\Updates" -Force
+        $updateLocalFileName = $osDictionary.UpdateLocalFileName;
+        if ( $updateLocalFileName )
+        {
+            Write-Host "Copying Update file";
+            New-Item -Path "$targetDriveLetter`:\Updates" -ItemType Directory -Force | Out-Null
+            Copy-Item -Path ".\$updateLocalFileName" -Destination "$targetDriveLetter`:\Updates" -Force
+        }
 
         Copy-Item -Path ".\answerfiles\$osCode\$bootType\Autounattend.xml" -Destination "$targetDriveLetter`:" -Force
     } else {
