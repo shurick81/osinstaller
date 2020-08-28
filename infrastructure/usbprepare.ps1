@@ -29,7 +29,8 @@ if ( $lettersToChoose.Count -gt 0 )
         Write-Host "Checking local image file $localFileName";
         if ( !( Get-Item .\$localFileName -ErrorAction Ignore ) )
         {
-            Start-BitsTransfer -Source $osDictionary.URL -Destination .\$localFileName;
+            #Start-BitsTransfer -Source $osDictionary.URL -Destination .\$localFileName;
+            Invoke-WebRequest -Uri $osDictionary.URL -OutFile .\$localFileName;
         }
 
         $updateLocalFileName = $osDictionary.UpdateLocalFileName;

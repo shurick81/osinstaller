@@ -1,4 +1,24 @@
 {
+    "Win_10_2004_Pro_Eng": {
+        "URL": "https://tb.rg-adguard.net/dl.php?go=ed2dc1aa",
+        "LocalFileName": "Win10_2004_English_x64.iso"
+    },
+    "Win_10_1909_Pro_Eng": {
+        "URL": "https://tb.rg-adguard.net/dl.php?go=981c4d21",
+        "LocalFileName": "Win10_1909_English_x64.iso"
+    },
+    "Win_10_1903_V2_Pro_Eng": {
+        "URL": "https://tb.rg-adguard.net/dl.php?go=ef499747",
+        "LocalFileName": "Win10_1903_V2_English_x64.iso"
+    },
+    "Win_10_1903_V1_Pro_Eng": {
+        "URL": "https://tb.rg-adguard.net/dl.php?go=cf6b84d9",
+        "LocalFileName": "Win10_1903_V1_English_x64.iso"
+    },
+    "Win_10_1809Oct_v2_Pro_Eng": {
+        "URL": "https://tb.rg-adguard.net/dl.php?go=b94aaafe",
+        "LocalFileName": "Win10_1809Oct_v2_English_x64.iso"
+    },
     "Win_10_1809Oct_Pro_Eng": {
         "URL": "https://tb.rg-adguard.net/dl.php?go=9c567637",
         "LocalFileName": "Win10_1809Oct_English_x64.iso"
